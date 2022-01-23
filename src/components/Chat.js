@@ -51,7 +51,8 @@ function Chat() {
 
           <ChatMessages>
             {channelMessages?.docs.map((doc) => {
-              const { message, timestamp, user, userImage } = doc.data();
+              const { message, timestamp, user, userImage, imageUrl } =
+                doc.data();
               return (
                 <Message
                   key={doc.id}
@@ -59,6 +60,7 @@ function Chat() {
                   timestamp={timestamp}
                   user={user}
                   userImage={userImage}
+                  imageUrl={imageUrl}
                 />
               );
             })}
