@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-function Message({ message, timestamp, user, userImage, imageUrl }) {
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+
+function Message({ message, timestamp, user, userImage, imageUrl, fileType }) {
   return (
     <MessageContainer>
       <img src={userImage} alt="" />
@@ -9,7 +11,20 @@ function Message({ message, timestamp, user, userImage, imageUrl }) {
           {user} <span>{new Date(timestamp?.toDate()).toUTCString()}</span>
         </h4>
         <p>{message}</p>
-        {imageUrl && <img src={imageUrl} alt="" />}
+        {imageUrl &&
+        (fileType === "jpg" ||
+          fileType === "jpeg" ||
+          fileType === "png" ||
+          fileType === "gif") ? (
+          <img src={imageUrl} alt="" />
+        ) : (
+          imageUrl && (
+            <a href={imageUrl}>
+              <FileCopyIcon />
+              Shared a file
+            </a>
+          )
+        )}
       </MessageInfo>
     </MessageContainer>
   );
@@ -44,5 +59,9 @@ const MessageInfo = styled.div`
   }
   > p {
     margin: 10px 5px;
+  }
+  > a {
+    color: var(--slack-color);
+    text-decoration: none;
   }
 `;

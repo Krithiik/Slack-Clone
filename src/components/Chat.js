@@ -51,8 +51,14 @@ function Chat() {
 
           <ChatMessages>
             {channelMessages?.docs.map((doc) => {
-              const { message, timestamp, user, userImage, imageUrl } =
-                doc.data();
+              const {
+                message,
+                timestamp,
+                user,
+                userImage,
+                imageUrl,
+                fileType,
+              } = doc.data();
               return (
                 <Message
                   key={doc.id}
@@ -61,6 +67,7 @@ function Chat() {
                   user={user}
                   userImage={userImage}
                   imageUrl={imageUrl}
+                  fileType={fileType}
                 />
               );
             })}
@@ -122,5 +129,5 @@ const HeaderRight = styled.div`
 const ChatMessages = styled.div``;
 
 const ChatBottom = styled.div`
-  padding-bottom: 200px;
+  padding-bottom: 235px;
 `;

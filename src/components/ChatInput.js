@@ -26,6 +26,7 @@ function ChatInput({ channelName, channelId, chatRef }) {
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
+      console.log(image?.type.replace(/(.*)\//g, ""));
     }
   };
 
@@ -59,6 +60,7 @@ function ChatInput({ channelName, channelId, chatRef }) {
         collection(db, `rooms/${channelId}`, "messages"),
         {
           imageUrl: LOADING_IMAGE_URL,
+          fileType: image?.type.replace(/(.*)\//g, ""),
           timestamp: serverTimestamp(),
           user: user?.displayName,
           userImage: user?.photoURL,
@@ -101,7 +103,7 @@ function ChatInput({ channelName, channelId, chatRef }) {
           placeholder={`Message # ${channelName}`}
         />
         <p>{image?.name}</p>
-        <Button class="fileButton" variant="contained" component="label">
+        <Button className="fileButton" variant="contained" component="label">
           <ImageIcon />
           <input type="file" hidden onChange={handleFileChange} />
         </Button>
