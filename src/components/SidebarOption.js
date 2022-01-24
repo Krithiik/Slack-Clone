@@ -1,15 +1,28 @@
 import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { roomsCollectionRef } from "../firebase";
 import { addDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { enterRoom } from "../features/appSlice";
+import DialogChannelNameInput from "./Dialog";
 
 function SidebarOption({ Icon, title, addChannelOption, id }) {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
-  const addChannel = async () => {
-    const channelName = prompt("Channel name");
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const openDialog = () => {
+    handleOpen();
+  };
+
+  const addChannel = async (channelName) => {
     if (channelName) {
       await addDoc(roomsCollectionRef, { channelName });
     }
@@ -25,20 +38,29 @@ function SidebarOption({ Icon, title, addChannelOption, id }) {
     }
   };
   return (
-    <SidebarOptionContainer
-      onClick={addChannelOption ? addChannel : selectChannel}
-    >
-      {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
-      {Icon ? (
-        <h3>{title}</h3>
-      ) : (
-        <SidebarOptionChannel>
-          <div style={{ paddingLeft: "10px" }}>
-            <span>#</span> {title}
-          </div>
-        </SidebarOptionChannel>
+    <>
+      <SidebarOptionContainer
+        onClick={addChannelOption ? openDialog : selectChannel}
+      >
+        {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
+        {Icon ? (
+          <h3>{title}</h3>
+        ) : (
+          <SidebarOptionChannel>
+            <div style={{ paddingLeft: "10px" }}>
+              <span>#</span> {title}
+            </div>
+          </SidebarOptionChannel>
+        )}
+      </SidebarOptionContainer>
+      {open && (
+        <DialogChannelNameInput
+          open={open}
+          handleClose={handleClose}
+          addChannel={addChannel}
+        />
       )}
-    </SidebarOptionContainer>
+    </>
   );
 }
 

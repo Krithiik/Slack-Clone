@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { db, auth } from "../firebase";
 import {
   collection,
   addDoc,
   serverTimestamp,
-  getFirestore,
   updateDoc,
 } from "firebase/firestore";
 import {
