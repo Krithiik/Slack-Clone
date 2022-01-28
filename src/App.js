@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
@@ -6,12 +6,34 @@ import styled from "styled-components";
 import Sidebar from "./components/Sidebar";
 import Chat from "./components/Chat";
 import Login from "./components/Login";
+import Notification from "./components/Notificaiton";
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Spinner from "react-spinkit";
+import { getMessaging, onMessage } from "firebase/messaging";
+
 function App() {
   // adds the user info into user state
   const [user, loading] = useAuthState(auth);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notification, setNotification] = useState({
+    title: "",
+    body: "",
+    img: "",
+  });
+  //fetch message and set notification
+  onMessage(getMessaging(), (message) => {
+    console.log(
+      "New foreground notification from Firebase Messaging!",
+      message.notification
+    );
+    setNotification({
+      title: message.notification.title,
+      body: message.notification.body,
+      img: message.notification.image,
+    });
+    setShowNotification(true);
+  });
 
   if (loading) {
     return (
@@ -45,6 +67,16 @@ function App() {
           </>
         )}
       </Router>
+      {showNotification ? (
+        <Notification
+          notification={notification}
+          show={showNotification}
+          setShow={setShowNotification}
+          setNotification={setNotification}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

@@ -16,7 +16,8 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { useAuthState } from "react-firebase-hooks/auth";
-import ImageIcon from "@material-ui/icons/Image";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
+
 function ChatInput({ channelName, channelId, chatRef }) {
   const [input, setInput] = useState("");
   const [image, setImage] = useState(null);
@@ -104,7 +105,7 @@ function ChatInput({ channelName, channelId, chatRef }) {
         />
         <p>{image?.name}</p>
         <Button className="fileButton" variant="contained" component="label">
-          <ImageIcon />
+          <AttachFileIcon />
           <input type="file" hidden onChange={handleFileChange} />
         </Button>
 

@@ -7,9 +7,9 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
+
 function Header() {
   const [user] = useAuthState(auth);
-  console.log(user);
   return (
     <HeaderContainer>
       {/* Header Left */}

@@ -21,9 +21,6 @@ function Sidebar() {
   //check for any changes in rooms collection and return docs.
   const [channels] = useCollection(roomsCollectionRef);
   const [user] = useAuthState(auth);
-
-  console.log(user);
-
   return (
     <SidebarContainer>
       <SidebarHeader>
